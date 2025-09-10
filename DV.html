@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Data Visualization</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2 style="text-align:center;">Tokyo Hourly Temperature Forecast</h2>
+  <canvas id="weatherChart" width="800" height="400"></canvas>
+
+  <script>
+    async function loadData() {
+      //Free Weather API (Open Meteo)
+      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&hourly=temperature_2m");
+      const data = await res.json();
+
+      const labels = data.hourly.time.slice(0, 24); // first 24 hours
+      const temps = data.hourly.temperature_2m.slice(0, 24);
+
+      // Chart.js line chart
+      const ctx = document.getElementById("weatherChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Temperature (°C)",
+            data: temps,
+            borderColor: "red",
+            backgroundColor: "pink",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { title: { display: true, text: "Hour" } },
+            y: { title: { display: true, text: "Temperature (°C)" } }
+          }
+        }
+      });
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

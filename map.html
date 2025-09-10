@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset = "UTF-8">
+    <title> MAP API </title>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Using Leaflet.js</h2>
+    <div id="map"></div>
+
+    <!--Leaflet JS-->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        //Initialize the map
+        const map = L.map('map').setView([37.5503, 126.9971], 13);
+
+        //Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        //Add a marker
+        L.marker([37.5503, 126.9971]).addTo(map)
+            .bindPopup('Hello! This is Seoul. ^_^')
+            .openPopup();
+    </script>
+
+    </body>
+</html>
